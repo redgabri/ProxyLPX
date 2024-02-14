@@ -1,0 +1,3 @@
+name: ProxyLPX
+version: '${version}'
+main: it.redgabri.lpxproxy.bukkit.ProxyLPX
