@@ -1,3 +1,5 @@
 name: ProxyLPX
 version: '${version}'
 main: it.redgabri.lpxproxy.bukkit.ProxyLPX
+author: redgabri
+description: "Adds LPX alerts on proxy"

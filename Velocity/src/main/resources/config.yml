@@ -1,8 +1,11 @@
 MESSAGES:
   ALERTS:
     ALERT_MESSAGE: "<dark_purple>LPX >> <gray>[%server%] <light_purple>%player% <gray>failed <dark_purple>%check% %type% <gray> (%vl%/%maxvl%)"
-    ENABLED: "<dark_purple>LPX >> <gray>Alerts enabled"
-    DISABLED: "<dark_purple>LPX >> <gray>Alerts disabled"
+    ENABLED: "<dark_purple>LPX >> <gray>Proxy alerts enabled"
+    DISABLED: "<dark_purple>LPX >> <gray>Proxy alerts disabled"
+  ERRORS:
+    INVALID_ARGS: "<dark_purple>LPX >> <gray>Invalid arguments"
+    ONLY_PLAYERS: "<dark_purple>LPX >> <gray>Only players can use this command"
 
 config-version: 1
 

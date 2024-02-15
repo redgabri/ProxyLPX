@@ -31,7 +31,6 @@ public final class ProxyLPX extends JavaPlugin implements Listener {
         int maxVL = e.getCheck().getOptions().getCheckOptions().getMaxVL();
 
         String message = "#LPX# " + player.getName() + " #LPX# " + type + " #LPX# " + maxVL + " #LPX# " + vl;
-        System.out.println("[DEBUG] " + message);
         player.sendPluginMessage(this, "lpxproxy", message.getBytes());
     }
 }

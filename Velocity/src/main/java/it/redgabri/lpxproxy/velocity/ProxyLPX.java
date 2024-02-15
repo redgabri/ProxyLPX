@@ -14,6 +14,7 @@ import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
 import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
+import it.redgabri.lpxproxy.velocity.commands.ProxyLPXCommand;
 import it.redgabri.lpxproxy.velocity.listeners.AlertsListener;
 import it.redgabri.lpxproxy.velocity.manager.AlertsManager;
 import org.slf4j.Logger;
@@ -26,9 +27,11 @@ import java.util.Objects;
 import static com.google.common.io.Resources.getResource;
 
 @Plugin(
-        id = "velocity",
-        name = "Velocity",
-        version = "1.0"
+        id = "proxylpx-velocity",
+        name = "ProxyLPX",
+        version = "1.0",
+        authors = "redgabri",
+        description = "Adds LPX alerts on proxy"
 )
 public class ProxyLPX {
     private Logger logger;
@@ -60,6 +63,7 @@ public class ProxyLPX {
         proxyServer.getChannelRegistrar().register(channel);
         proxyServer.getEventManager().register(this, new AlertsListener());
         alertsManager = new AlertsManager();
+        proxyServer.getCommandManager().register("lpxproxy", new ProxyLPXCommand(), "proxylpx");
     }
 
     public static ProxyLPX getInstance() {
