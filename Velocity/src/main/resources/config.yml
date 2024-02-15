@@ -1,0 +1,9 @@
+MESSAGES:
+  ALERTS:
+    ALERT_MESSAGE: "<dark_purple>LPX >> <gray>[%server%] <light_purple>%player% <gray>failed <dark_purple>%check% %type% <gray> (%vl%/%maxvl%)"
+    ENABLED: "<dark_purple>LPX >> <gray>Alerts enabled"
+    DISABLED: "<dark_purple>LPX >> <gray>Alerts disabled"
+
+config-version: 1
+
+

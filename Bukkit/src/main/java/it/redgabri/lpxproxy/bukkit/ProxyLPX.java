@@ -25,11 +25,12 @@ public final class ProxyLPX extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onFlag(LPXAlertEvent e){
-        ProtocolPlayer protocolPlayer = e.getProtocolPlayer();
-        Player player = protocolPlayer.getPlayer();
+        Player player = e.getProtocolPlayer().getPlayer();
         CheckType type = e.getCheck().getType();
+        int vl = e.getCheck().getOptions().getVl();
+        int maxVL = e.getCheck().getOptions().getCheckOptions().getMaxVL();
 
-        String message = "#player " + player.getName() + " #type " + type + " #maxvl " + e.getCheck().getOptions().getCheckOptions().getMaxVL() + " #vl " + e.getCheck().getOptions().getVl();
+        String message = "#LPX# " + player.getName() + " #LPX# " + type + " #LPX# " + maxVL + " #LPX# " + vl;
         System.out.println("[DEBUG] " + message);
         player.sendPluginMessage(this, "lpxproxy", message.getBytes());
     }
