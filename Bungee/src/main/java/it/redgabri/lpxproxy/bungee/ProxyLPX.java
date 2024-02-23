@@ -25,6 +25,7 @@ public final class ProxyLPX extends Plugin {
     public void onEnable(){
         instance = this;
         this.getProxy().getPluginManager().registerCommand(this, new ProxyLPXCommand("lpxproxy"));
+        this.getProxy().getPluginManager().registerCommand(this, new ProxyLPXCommand("proxylpx"));
         this.getProxy().registerChannel("lpxproxy");
         this.getProxy().getPluginManager().registerListener(this, new AlertsListener());
         try {
