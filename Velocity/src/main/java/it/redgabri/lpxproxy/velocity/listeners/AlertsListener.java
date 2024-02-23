@@ -1,8 +1,12 @@
 package it.redgabri.lpxproxy.velocity.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import it.redgabri.lpxproxy.velocity.ProxyLPX;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+
+import java.util.List;
 
 public class AlertsListener {
 
@@ -15,6 +19,15 @@ public class AlertsListener {
                 e.setResult(PluginMessageEvent.ForwardResult.handled());
                 ProxyLPX.getInstance().getAlertsManager().sendAlert(message);
             }
+        }
+    }
+
+    @Subscribe
+    public void onJoin(LoginEvent e){
+        if (e.getPlayer().hasPermission("lpxproxy.alerts")){
+            List<String> alertPlayers = ProxyLPX.getInstance().getAlertsManager().alertsPlayer;
+            ProxyLPX.getInstance().getAlertsManager().toggle(e.getPlayer().getUsername());
+            e.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(ProxyLPX.getInstance().getConfig().getString(!alertPlayers.contains(e.getPlayer().getUsername()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
         }
     }
 }

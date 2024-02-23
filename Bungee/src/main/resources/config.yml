@@ -1,0 +1,12 @@
+MESSAGES:
+  ALERTS:
+    ALERT_MESSAGE: "&5LPX >> &7[%server%] &d%player% &7failed &5%check% %type% &7 (%vl%/%maxvl%)"
+    ENABLED: "&5LPX >> &7Proxy alerts enabled"
+    DISABLED: "&5LPX >> &7Proxy alerts disabled"
+  ERRORS:
+    INVALID_ARGS: "&5LPX >> &7Invalid arguments"
+    ONLY_PLAYERS: "&5LPX >> &7Only players can use this command"
+
+config-version: 1
+
+

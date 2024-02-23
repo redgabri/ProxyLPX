@@ -29,7 +29,7 @@ import static com.google.common.io.Resources.getResource;
 @Plugin(
         id = "proxylpx-velocity",
         name = "ProxyLPX",
-        version = "1.0",
+        version = "1.1",
         authors = "redgabri",
         description = "Adds LPX alerts on proxy"
 )

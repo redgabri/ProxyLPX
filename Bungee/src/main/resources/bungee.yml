@@ -1,0 +1,5 @@
+name: ProxyLPX
+version: '${version}'
+main: it.redgabri.lpxproxy.bungee.ProxyLPX
+author: redgabri
+description: Adds LPX alerts on proxy
