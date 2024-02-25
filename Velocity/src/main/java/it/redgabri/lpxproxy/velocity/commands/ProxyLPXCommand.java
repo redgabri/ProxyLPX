@@ -28,4 +28,9 @@ public class ProxyLPXCommand implements SimpleCommand {
             ProxyLPX.getInstance().getAlertsManager().toggle(player.getUsername());
         }
     }
+
+    @Override
+    public boolean hasPermission(final Invocation invocation) {
+        return invocation.source().hasPermission("lpxproxy.alerts");
+    }
 }
