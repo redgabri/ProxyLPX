@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ProxyLPXCommand extends Command {
     public ProxyLPXCommand(String name) {
-        super(name);
+        super(name, "lpxproxy.alerts");
     }
 
     @Override
