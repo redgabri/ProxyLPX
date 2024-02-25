@@ -3,6 +3,7 @@ package it.redgabri.lpxproxy.velocity.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
+import com.velocitypowered.api.proxy.Player;
 import it.redgabri.lpxproxy.velocity.ProxyLPX;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
@@ -12,6 +13,9 @@ public class AlertsListener {
 
     @Subscribe
     public void onPluginMessage(PluginMessageEvent e){
+        // Make sure the server is the source since we don't
+        // want players spoofing fake alerts
+        if (e.getSource() instanceof Player) return;
         byte[] data = e.getData();
         String message = new String(data);
         if(e.getIdentifier().equals(ProxyLPX.getInstance().getChannel())){
