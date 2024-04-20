@@ -19,7 +19,7 @@ public class ProxyLPXCommand extends Command {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("alerts")) {
                 List<String> alertPlayers = ProxyLPX.getInstance().getAlertsManager().alertsPlayer;
-                ProxyLPX.getInstance().getAlertsManager().toggle(sender.getName());
+                ProxyLPX.getInstance().getAlertsManager().toggle((ProxiedPlayer) sender);
                 sender.sendMessage(Utils.format(ProxyLPX.getInstance().getConfig().getString(!alertPlayers.contains(sender.getName()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
             }
         } else {

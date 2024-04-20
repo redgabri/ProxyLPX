@@ -25,7 +25,7 @@ public class ProxyLPXCommand implements SimpleCommand {
             List<String> alertPlayers = ProxyLPX.getInstance().getAlertsManager().alertsPlayer;
             Player player = (Player) source;
             source.sendMessage(MiniMessage.miniMessage().deserialize(ProxyLPX.getInstance().getConfig().getString(alertPlayers.contains(player.getUsername()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
-            ProxyLPX.getInstance().getAlertsManager().toggle(player.getUsername());
+            ProxyLPX.getInstance().getAlertsManager().toggle(player);
         }
     }
 
