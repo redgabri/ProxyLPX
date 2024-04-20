@@ -24,12 +24,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
 
-import static com.google.common.io.Resources.getResource;
-
 @Plugin(
         id = "proxylpx-velocity",
         name = "ProxyLPX",
-        version = "1.1",
+        version = "1.3",
         authors = "redgabri",
         description = "Adds LPX alerts on proxy"
 )
@@ -40,7 +38,7 @@ public class ProxyLPX {
     private YamlDocument config;
     private static ProxyLPX instance;
     private AlertsManager alertsManager;
-    private final ChannelIdentifier channel = new LegacyChannelIdentifier("lpxproxy");
+    private final ChannelIdentifier channel = new LegacyChannelIdentifier("lpxproxy:alerts");
     @Inject
     public ProxyLPX(Logger logger, ProxyServer proxyServer, @DataDirectory Path path) {
         this.logger = logger;

@@ -10,7 +10,7 @@ import it.redgabri.lpxproxy.bungee.commands.ProxyLPXCommand;
 import it.redgabri.lpxproxy.bungee.listeners.AlertsListener;
 import it.redgabri.lpxproxy.bungee.manager.AlertsManager;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.config.YamlConfiguration;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public final class ProxyLPX extends Plugin {
         instance = this;
         this.getProxy().getPluginManager().registerCommand(this, new ProxyLPXCommand("lpxproxy"));
         this.getProxy().getPluginManager().registerCommand(this, new ProxyLPXCommand("proxylpx"));
-        this.getProxy().registerChannel("lpxproxy");
+        this.getProxy().registerChannel("lpxproxy:alerts");
         this.getProxy().getPluginManager().registerListener(this, new AlertsListener());
         try {
             config = YamlDocument.create(new File(this.getProxy().getPluginsFolder(), "ProxyLPX/config.yml"),
@@ -45,7 +45,7 @@ public final class ProxyLPX extends Plugin {
 
     @Override
     public void onDisable() {
-        this.getProxy().unregisterChannel("lpxproxy");
+        this.getProxy().unregisterChannel("lpxproxy:alerts");
     }
     public static ProxyLPX getInstance() {
         return instance;

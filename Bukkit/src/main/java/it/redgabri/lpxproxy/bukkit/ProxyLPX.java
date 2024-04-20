@@ -20,7 +20,7 @@ public final class ProxyLPX extends JavaPlugin implements Listener {
         }
         Bukkit.getLogger().info("LPX plugin is installed, enabling ProxyLPX...");
         getServer().getPluginManager().registerEvents(this, this);
-        getServer().getMessenger().registerOutgoingPluginChannel(this, "lpxproxy");
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "lpxproxy:alerts");
     }
 
     @EventHandler
@@ -31,6 +31,6 @@ public final class ProxyLPX extends JavaPlugin implements Listener {
         int maxVL = e.getCheck().getOptions().getCheckOptions().getMaxVL();
 
         String message = "#LPX# " + player.getName() + " #LPX# " + type + " #LPX# " + maxVL + " #LPX# " + vl;
-        player.sendPluginMessage(this, "lpxproxy", message.getBytes());
+        player.sendPluginMessage(this, "lpxproxy:alerts", message.getBytes());
     }
 }

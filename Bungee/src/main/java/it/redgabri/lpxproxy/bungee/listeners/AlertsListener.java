@@ -29,7 +29,7 @@ public class AlertsListener implements Listener {
     public void onJoin(PostLoginEvent e){
         if (e.getPlayer().hasPermission("lpxproxy.alerts")){
             List<String> alertPlayers = ProxyLPX.getInstance().getAlertsManager().alertsPlayer;
-            ProxyLPX.getInstance().getAlertsManager().toggle(e.getPlayer().getName());
+            ProxyLPX.getInstance().getAlertsManager().setEnabled(e.getPlayer(), true);
             e.getPlayer().sendMessage(Utils.format(ProxyLPX.getInstance().getConfig().getString(!alertPlayers.contains(e.getPlayer().getName()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
         }
     }

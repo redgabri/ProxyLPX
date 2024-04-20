@@ -1,5 +1,8 @@
 name: ProxyLPX
-version: '${version}'
+version: '1.3'
 main: it.redgabri.lpxproxy.bukkit.ProxyLPX
 author: redgabri
 description: "Adds LPX alerts on proxy"
+depend: [LPX]
+
+folia-supported: true

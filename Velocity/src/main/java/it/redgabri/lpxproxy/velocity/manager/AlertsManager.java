@@ -11,11 +11,15 @@ import java.util.Optional;
 
 public class AlertsManager {
     public List<String> alertsPlayer = new ArrayList<>();
-    public void toggle(String player){
-        if (alertsPlayer.contains(player)){
-            alertsPlayer.remove(player);
+    public void toggle(Player player){
+        setEnabled(player, !alertsPlayer.contains(player.getUsername()));
+    }
+
+    public void setEnabled(Player player, boolean enabled){
+        if (enabled){
+            alertsPlayer.remove(player.getUsername());
         } else {
-            alertsPlayer.add(player);
+            alertsPlayer.add(player.getUsername());
         }
     }
     YamlDocument config = ProxyLPX.getInstance().getConfig();
