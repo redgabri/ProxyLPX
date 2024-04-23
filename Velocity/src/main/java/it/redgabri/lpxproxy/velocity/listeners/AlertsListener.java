@@ -23,7 +23,7 @@ public class AlertsListener {
         if(e.getIdentifier().equals(ProxyLPX.getInstance().getChannel())){
             if(message.startsWith("#LPX#")){
                 e.setResult(PluginMessageEvent.ForwardResult.handled());
-                ProxyLPX.getInstance().getAlertsManager().sendAlert(message);
+                ProxyLPX.getInstance().getAlertsManager().sendAlert(message, ProxyLPX.getInstance().getPlayerManager().getPlayers());
             }
         }
     }
@@ -31,7 +31,7 @@ public class AlertsListener {
     @Subscribe
     public void onJoin(PostLoginEvent e){
         if (e.getPlayer().hasPermission("lpxproxy.alerts")){
-            ProxyLPX.getInstance().getAlertsManager().setEnabled(e.getPlayer(), true);
+            ProxyLPX.getInstance().getAlertsManager().setEnabled(ProxyLPX.getInstance().getPlayerManager().getPlayer(e.getPlayer().getUniqueId()), true);
             e.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(ProxyLPX.getInstance().getConfig().getString(!ProxyLPX.getInstance().getAlertsManager().alertsPlayer.contains(e.getPlayer().getUniqueId()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
         }
     }

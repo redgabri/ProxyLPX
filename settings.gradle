@@ -1,2 +1,6 @@
 rootProject.name = 'LpxHandler'
+include 'Velocity'
+include 'Bungee'
+include 'Bukkit'
+include 'Commons'
 

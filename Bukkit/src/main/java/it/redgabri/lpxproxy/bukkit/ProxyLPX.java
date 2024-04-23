@@ -2,7 +2,6 @@ package it.redgabri.lpxproxy.bukkit;
 
 import it.ytnoos.lpx.api.check.enums.CheckType;
 import it.ytnoos.lpx.api.event.LPXAlertEvent;
-import it.ytnoos.lpx.api.player.ProtocolPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

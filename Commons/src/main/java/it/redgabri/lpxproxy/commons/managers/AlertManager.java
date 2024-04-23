@@ -1,35 +1,42 @@
-package it.redgabri.lpxproxy.bungee.manager;
+package it.redgabri.lpxproxy.commons.managers;
 
+import com.velocitypowered.api.proxy.Player;
 import dev.dejvokep.boostedyaml.YamlDocument;
-import it.redgabri.lpxproxy.bungee.ProxyLPX;
-import it.redgabri.lpxproxy.bungee.utils.Utils;
-import net.md_5.bungee.Util;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import it.redgabri.lpxproxy.commons.player.ILPXPlayer;
 import okhttp3.*;
+import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.io.IOException;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
-public class AlertsManager {
+public class AlertManager {
+    public Set<UUID> alertsPlayer = new HashSet<>();
+    private final YamlDocument config;
+    private final boolean isVelocity;
 
-    public List<UUID> alertsPlayer = new ArrayList<>();
-    private final YamlDocument config = ProxyLPX.getInstance().getConfig();
-    public void toggle(ProxiedPlayer player){
-        setEnabled(player, !alertsPlayer.contains(player.getUniqueId()));
-    }
-
-    public void setEnabled(ProxiedPlayer player, boolean enabled){
-        if (enabled){
-            alertsPlayer.remove(player.getUniqueId());
-        } else {
-            alertsPlayer.add(player.getUniqueId());
+    public AlertManager() {
+        isVelocity = Arrays.asList(Object.class.getInterfaces()).contains(Player.class);
+        try {
+            config = YamlDocument.create(this.getClass().getResourceAsStream("/config.yml"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void sendAlert(String message) {
+    public void toggle(ILPXPlayer player){
+        setEnabled(player, !alertsPlayer.contains(player.uuid));
+    }
+
+    public void setEnabled(ILPXPlayer player, boolean enabled){
+        if (enabled){
+            alertsPlayer.remove(player.uuid);
+        } else {
+            alertsPlayer.add(player.uuid);
+        }
+    }
+
+    public void sendAlert(String message, List<ILPXPlayer> players) {
         String[] info = message.split("#LPX#");
         String[] checkInfo = info[2].split("_");
 
@@ -40,15 +47,6 @@ public class AlertsManager {
         String Vl = info[4].trim();
         String server = null;
 
-
-        Optional<ProxiedPlayer> player = Optional.ofNullable(ProxyLPX.getInstance().getProxy().getPlayer(playerName));
-        if (player.isPresent()) {
-            server = player.get().getServer().getInfo().getName();
-        } else {
-            ProxyLPX.getInstance().getLogger().severe("Player " + playerName + " not found while sending an alert");
-            return;
-        }
-
         sendToDiscord(config.getString("DISCORD.MESSAGE")
                 .replaceAll("%player%", playerName)
                 .replaceAll("%server%", server)
@@ -58,20 +56,20 @@ public class AlertsManager {
                 .replaceAll("%maxvl%", maxVL)
         );
 
-        for (ProxiedPlayer all : ProxyLPX.getInstance().getProxy().getPlayers()) {
-            if (!all.getServer().getInfo().getName().equals(server)) {
-                if (all.hasPermission("lpxproxy.alerts") && alertsPlayer.contains(all.getUniqueId())) {
-                    all.sendMessage(Utils.format(config.getString("MESSAGES.ALERTS.ALERT_MESSAGE")
+        players.forEach(all -> {
+            if (!all.getServerName().equals(server)) {
+                if (all.hasPermission("lpxproxy.alerts") && alertsPlayer.contains(all.uuid)) {
+                    all.sendMessage(config.getString("MESSAGES.ALERTS.ALERT_MESSAGE")
                             .replaceAll("%player%", playerName)
                             .replaceAll("%server%", server)
                             .replaceAll("%check%", check)
                             .replaceAll("%type%", type)
                             .replaceAll("%vl%", Vl)
                             .replaceAll("%maxvl%", maxVL)
-                    ));
+                    );
                 }
             }
-        }
+        });
     }
 
     public void sendToDiscord(String message) {
@@ -90,7 +88,7 @@ public class AlertsManager {
 
             try (Response response = client.newCall(request).execute()) {
                 if (!response.isSuccessful()) {
-                    ProxyLPX.getInstance().getLogger().info("An error occurred while sending discord webhook. ");
+                    System.out.println("[PROXYLPX] An error occurred while sending the webhook!");
                 }
             } catch (Exception e) {
                 e.printStackTrace(System.err);

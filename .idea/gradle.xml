@@ -9,29 +9,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/Bukkit" />
-        <option name="modules">
-          <set>
             <option value="$PROJECT_DIR$/Bukkit" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/Bungee" />
-        <option name="modules">
-          <set>
             <option value="$PROJECT_DIR$/Bungee" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/Velocity" />
-        <option name="modules">
-          <set>
+            <option value="$PROJECT_DIR$/Commons" />
             <option value="$PROJECT_DIR$/Velocity" />
           </set>
         </option>

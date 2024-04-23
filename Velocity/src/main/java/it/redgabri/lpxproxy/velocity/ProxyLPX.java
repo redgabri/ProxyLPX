@@ -14,9 +14,10 @@ import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
 import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
 import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
+import it.redgabri.lpxproxy.commons.managers.AlertManager;
+import it.redgabri.lpxproxy.commons.player.ILPXPlayer;
 import it.redgabri.lpxproxy.velocity.commands.ProxyLPXCommand;
 import it.redgabri.lpxproxy.velocity.listeners.AlertsListener;
-import it.redgabri.lpxproxy.velocity.manager.AlertsManager;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -37,7 +38,8 @@ public class ProxyLPX {
     private Path path;
     private YamlDocument config;
     private static ProxyLPX instance;
-    private AlertsManager alertsManager;
+    private AlertManager alertsManager;
+    private ILPXPlayer.PlayerManager playerManager;
     private final ChannelIdentifier channel = new LegacyChannelIdentifier("lpxproxy:alerts");
     @Inject
     public ProxyLPX(Logger logger, ProxyServer proxyServer, @DataDirectory Path path) {
@@ -49,6 +51,7 @@ public class ProxyLPX {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) throws IOException {
         instance = this;
+        playerManager = new ILPXPlayer.PlayerManager();
         config = YamlDocument.create(new File(path.toFile(), "config.yml"),
                 Objects.requireNonNull(getClass().getResourceAsStream("/config.yml")),
                 GeneralSettings.builder().setKeyFormat(GeneralSettings.KeyFormat.OBJECT).build(),
@@ -60,18 +63,16 @@ public class ProxyLPX {
         config.reload();
         proxyServer.getChannelRegistrar().register(channel);
         proxyServer.getEventManager().register(this, new AlertsListener());
-        alertsManager = new AlertsManager();
+        alertsManager = new AlertManager();
         proxyServer.getCommandManager().register("lpxproxy", new ProxyLPXCommand(), "proxylpx");
     }
 
     public static ProxyLPX getInstance() {
         return instance;
     }
-
     public Logger getLogger() {
         return logger;
     }
-
     public ProxyServer getProxyServer(){
         return proxyServer;
     }
@@ -81,7 +82,10 @@ public class ProxyLPX {
     public ChannelIdentifier getChannel(){
         return channel;
     }
-    public AlertsManager getAlertsManager() {
+    public AlertManager getAlertsManager() {
         return alertsManager;
+    }
+    public ILPXPlayer.PlayerManager getPlayerManager() {
+        return playerManager;
     }
 }

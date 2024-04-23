@@ -8,7 +8,9 @@ import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import it.redgabri.lpxproxy.bungee.commands.ProxyLPXCommand;
 import it.redgabri.lpxproxy.bungee.listeners.AlertsListener;
-import it.redgabri.lpxproxy.bungee.manager.AlertsManager;
+import it.redgabri.lpxproxy.bungee.listeners.PlayerListener;
+import it.redgabri.lpxproxy.commons.managers.AlertManager;
+import it.redgabri.lpxproxy.commons.player.ILPXPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
 
 
@@ -19,15 +21,18 @@ import java.util.Objects;
 public final class ProxyLPX extends Plugin {
     private static ProxyLPX instance;
     private YamlDocument config;
-    private AlertsManager alertsManager;
+    private AlertManager alertsManager;
+    private ILPXPlayer.PlayerManager playerManager;
 
     @Override
     public void onEnable(){
         instance = this;
+        this.playerManager = new ILPXPlayer.PlayerManager();
         this.getProxy().getPluginManager().registerCommand(this, new ProxyLPXCommand("lpxproxy"));
         this.getProxy().getPluginManager().registerCommand(this, new ProxyLPXCommand("proxylpx"));
         this.getProxy().registerChannel("lpxproxy:alerts");
         this.getProxy().getPluginManager().registerListener(this, new AlertsListener());
+        this.getProxy().getPluginManager().registerListener(this, new PlayerListener());
         try {
             config = YamlDocument.create(new File(this.getProxy().getPluginsFolder(), "ProxyLPX/config.yml"),
                     Objects.requireNonNull(getClass().getResourceAsStream("/config.yml")),
@@ -53,10 +58,14 @@ public final class ProxyLPX extends Plugin {
     public YamlDocument getConfig() {
         return config;
     }
-    public AlertsManager getAlertsManager() {
+    public AlertManager getAlertsManager() {
         if (alertsManager == null) {
-            alertsManager = new AlertsManager();
+            alertsManager = new AlertManager();
         }
         return alertsManager;
+    }
+
+    public ILPXPlayer.PlayerManager getPlayerManager() {
+        return playerManager;
     }
 }
