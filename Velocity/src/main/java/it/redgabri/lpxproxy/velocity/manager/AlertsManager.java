@@ -5,24 +5,25 @@ import dev.dejvokep.boostedyaml.YamlDocument;
 import it.redgabri.lpxproxy.velocity.ProxyLPX;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class AlertsManager {
-    public List<String> alertsPlayer = new ArrayList<>();
+
+    public Set<UUID> alertsPlayer = new HashSet<>();
+    private final YamlDocument config = ProxyLPX.getInstance().getConfig();
+
     public void toggle(Player player){
-        setEnabled(player, !alertsPlayer.contains(player.getUsername()));
+        setEnabled(player, !alertsPlayer.contains(player.getUniqueId()));
     }
 
     public void setEnabled(Player player, boolean enabled){
         if (enabled){
-            alertsPlayer.remove(player.getUsername());
+            alertsPlayer.remove(player.getUniqueId());
         } else {
-            alertsPlayer.add(player.getUsername());
+            alertsPlayer.add(player.getUniqueId());
         }
     }
-    YamlDocument config = ProxyLPX.getInstance().getConfig();
+
     public void sendAlert(String message) {
         String[] info = message.split("#LPX#");
         String[] checkInfo = info[2].split("_");
