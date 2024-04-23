@@ -67,6 +67,11 @@ public class ProxyLPX {
     public static ProxyLPX getInstance() {
         return instance;
     }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
     public ProxyServer getProxyServer(){
         return proxyServer;
     }

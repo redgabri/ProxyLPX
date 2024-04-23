@@ -7,6 +7,10 @@ MESSAGES:
     INVALID_ARGS: "&5LPX >> &7Invalid arguments"
     ONLY_PLAYERS: "&5LPX >> &7Only players can use this command"
 
+DISCORD:
+  URL: ""
+  MESSAGE: "**LPX** >> [%server%] **%player%** failed **%check% %type%** (%vl%/%maxvl%)"
+
 config-version: 1
 
 

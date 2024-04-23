@@ -9,6 +9,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 import java.util.List;
+import java.util.UUID;
 
 public class AlertsListener implements Listener {
 
@@ -28,9 +29,8 @@ public class AlertsListener implements Listener {
     @EventHandler
     public void onJoin(PostLoginEvent e){
         if (e.getPlayer().hasPermission("lpxproxy.alerts")){
-            List<String> alertPlayers = ProxyLPX.getInstance().getAlertsManager().alertsPlayer;
             ProxyLPX.getInstance().getAlertsManager().setEnabled(e.getPlayer(), true);
-            e.getPlayer().sendMessage(Utils.format(ProxyLPX.getInstance().getConfig().getString(!alertPlayers.contains(e.getPlayer().getName()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
+            e.getPlayer().sendMessage(Utils.format(ProxyLPX.getInstance().getConfig().getString(!ProxyLPX.getInstance().getAlertsManager().alertsPlayer.contains(e.getPlayer().getUniqueId()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
         }
     }
 }
