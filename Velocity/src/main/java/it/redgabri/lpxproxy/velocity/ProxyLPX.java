@@ -27,7 +27,7 @@ import java.util.Objects;
 @Plugin(
         id = "proxylpx-velocity",
         name = "ProxyLPX",
-        version = "1.3",
+        version = "1.4",
         authors = "redgabri",
         description = "Adds LPX alerts on proxy"
 )
