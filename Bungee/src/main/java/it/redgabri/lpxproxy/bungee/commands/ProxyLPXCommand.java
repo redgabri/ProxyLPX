@@ -7,6 +7,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ProxyLPXCommand extends Command {
     public ProxyLPXCommand(String name) {
@@ -18,9 +19,8 @@ public class ProxyLPXCommand extends Command {
         if (!(sender instanceof ProxiedPlayer)) return;
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("alerts")) {
-                List<String> alertPlayers = ProxyLPX.getInstance().getAlertsManager().alertsPlayer;
                 ProxyLPX.getInstance().getAlertsManager().toggle((ProxiedPlayer) sender);
-                sender.sendMessage(Utils.format(ProxyLPX.getInstance().getConfig().getString(!alertPlayers.contains(sender.getName()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
+                sender.sendMessage(Utils.format(ProxyLPX.getInstance().getConfig().getString(!ProxyLPX.getInstance().getAlertsManager().alertsPlayer.contains(((ProxiedPlayer) sender).getUniqueId()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
             }
         } else {
             sender.sendMessage(Utils.format(ProxyLPX.getInstance().getConfig().getString("MESSAGES.ERRORS.INVALID_ARGS")));

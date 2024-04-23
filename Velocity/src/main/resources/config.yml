@@ -7,6 +7,10 @@ MESSAGES:
     INVALID_ARGS: "<dark_purple>LPX >> <gray>Invalid arguments"
     ONLY_PLAYERS: "<dark_purple>LPX >> <gray>Only players can use this command"
 
-config-version: 1
+DISCORD:
+  URL: ""
+  MESSAGE: "**LPX** >> [%server%] **%player%** failed **%check% %type%** (%vl%/%maxvl%)"
+
+config-version: 2
 
 

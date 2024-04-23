@@ -1,6 +1,7 @@
 package it.redgabri.lpxproxy.velocity.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
@@ -30,9 +31,13 @@ public class AlertsListener {
     @Subscribe
     public void onJoin(PostLoginEvent e){
         if (e.getPlayer().hasPermission("lpxproxy.alerts")){
-            List<String> alertPlayers = ProxyLPX.getInstance().getAlertsManager().alertsPlayer;
             ProxyLPX.getInstance().getAlertsManager().setEnabled(e.getPlayer(), true);
-            e.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(ProxyLPX.getInstance().getConfig().getString(!alertPlayers.contains(e.getPlayer().getUsername()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
+            e.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(ProxyLPX.getInstance().getConfig().getString(!ProxyLPX.getInstance().getAlertsManager().alertsPlayer.contains(e.getPlayer().getUniqueId()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
         }
+    }
+
+    @Subscribe
+    public void onDisconnect(DisconnectEvent e){
+        ProxyLPX.getInstance().getAlertsManager().alertsPlayer.remove(e.getPlayer().getUniqueId());
     }
 }
