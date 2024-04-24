@@ -9,11 +9,11 @@ import it.redgabri.lpxproxy.velocity.player.LPXPlayer;
 public class PlayerListener {
     @Subscribe
     public void onJoin(LoginEvent e){
-        ProxyLPX.getInstance().getPlayerManager().getPlayers().add(new LPXPlayer(e.getPlayer().getUniqueId()));
+        ProxyLPX.getInstance().getPlayerManager().getPlayers().add(new LPXPlayer(e.getPlayer().getUsername()));
     }
 
     @Subscribe
     public void onLeave(DisconnectEvent e){
-        ProxyLPX.getInstance().getPlayerManager().getPlayers().remove(new LPXPlayer(e.getPlayer().getUniqueId()));
+        ProxyLPX.getInstance().getPlayerManager().getPlayers().remove(ProxyLPX.getInstance().getPlayerManager().getPlayer(e.getPlayer().getUsername()));
     }
 }

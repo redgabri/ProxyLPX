@@ -18,6 +18,7 @@ import it.redgabri.lpxproxy.commons.managers.AlertManager;
 import it.redgabri.lpxproxy.commons.player.ILPXPlayer;
 import it.redgabri.lpxproxy.velocity.commands.ProxyLPXCommand;
 import it.redgabri.lpxproxy.velocity.listeners.AlertsListener;
+import it.redgabri.lpxproxy.velocity.listeners.PlayerListener;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -28,7 +29,7 @@ import java.util.Objects;
 @Plugin(
         id = "proxylpx-velocity",
         name = "ProxyLPX",
-        version = "1.4",
+        version = "1.5",
         authors = "redgabri",
         description = "Adds LPX alerts on proxy"
 )
@@ -62,6 +63,7 @@ public class ProxyLPX {
         config.update();
         config.reload();
         proxyServer.getChannelRegistrar().register(channel);
+        proxyServer.getEventManager().register(this, new PlayerListener());
         proxyServer.getEventManager().register(this, new AlertsListener());
         alertsManager = new AlertManager();
         proxyServer.getCommandManager().register("lpxproxy", new ProxyLPXCommand(), "proxylpx");

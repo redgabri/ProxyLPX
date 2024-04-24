@@ -19,11 +19,11 @@ public class ProxyLPXCommand extends Command {
         if (!(sender instanceof ProxiedPlayer)) return;
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("alerts")) {
-                ProxyLPX.getInstance().getAlertsManager().toggle(ProxyLPX.getInstance().getPlayerManager().getPlayer(((ProxiedPlayer) sender).getUniqueId()));
-                sender.sendMessage(Utils.format(ProxyLPX.getInstance().getConfig().getString(!ProxyLPX.getInstance().getAlertsManager().alertsPlayer.contains(((ProxiedPlayer) sender).getUniqueId()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
+                ProxyLPX.getInstance().getAlertsManager().toggle(ProxyLPX.getInstance().getPlayerManager().getPlayer(((ProxiedPlayer) sender).getName()));
+                sender.sendMessage(Utils.format(ProxyLPX.getInstance().getConfig().getString(!ProxyLPX.getInstance().getAlertsManager().alertsPlayer.contains(((ProxiedPlayer) sender).getName()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
+            } else {
+                sender.sendMessage(Utils.format(ProxyLPX.getInstance().getConfig().getString("MESSAGES.ERRORS.INVALID_ARGS")));
             }
-        } else {
-            sender.sendMessage(Utils.format(ProxyLPX.getInstance().getConfig().getString("MESSAGES.ERRORS.INVALID_ARGS")));
         }
     }
 }

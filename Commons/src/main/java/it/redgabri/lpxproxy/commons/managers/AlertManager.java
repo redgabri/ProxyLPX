@@ -11,12 +11,9 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 public class AlertManager {
-    public Set<UUID> alertsPlayer = new HashSet<>();
+    public Set<String> alertsPlayer = new HashSet<>();
     private final YamlDocument config;
-    private final boolean isVelocity;
-
     public AlertManager() {
-        isVelocity = Arrays.asList(Object.class.getInterfaces()).contains(Player.class);
         try {
             config = YamlDocument.create(this.getClass().getResourceAsStream("/config.yml"));
         } catch (IOException e) {
@@ -25,14 +22,14 @@ public class AlertManager {
     }
 
     public void toggle(ILPXPlayer player){
-        setEnabled(player, !alertsPlayer.contains(player.uuid));
+        setEnabled(player, !alertsPlayer.contains(player.name));
     }
 
     public void setEnabled(ILPXPlayer player, boolean enabled){
         if (enabled){
-            alertsPlayer.remove(player.uuid);
+            alertsPlayer.add(player.name);
         } else {
-            alertsPlayer.add(player.uuid);
+            alertsPlayer.remove(player.name);
         }
     }
 
@@ -45,20 +42,14 @@ public class AlertManager {
         String type = checkInfo[1].trim();
         String maxVL = info[3].trim();
         String Vl = info[4].trim();
-        String server = null;
-
-        sendToDiscord(config.getString("DISCORD.MESSAGE")
-                .replaceAll("%player%", playerName)
-                .replaceAll("%server%", server)
-                .replaceAll("%check%", check)
-                .replaceAll("%type%", type)
-                .replaceAll("%vl%", Vl)
-                .replaceAll("%maxvl%", maxVL)
-        );
+        String server = players.stream().filter(p -> playerName.equalsIgnoreCase(p.name)).findFirst().get().getServerName();
 
         players.forEach(all -> {
+            System.out.println(!all.getServerName().equalsIgnoreCase(server));
+            System.out.println(all.hasPermission("lpxproxy.alerts"));
+            System.out.println(alertsPlayer.contains(all.name));
             if (!all.getServerName().equals(server)) {
-                if (all.hasPermission("lpxproxy.alerts") && alertsPlayer.contains(all.uuid)) {
+                if (all.hasPermission("lpxproxy.alerts") && alertsPlayer.contains(all.name)) {
                     all.sendMessage(config.getString("MESSAGES.ALERTS.ALERT_MESSAGE")
                             .replaceAll("%player%", playerName)
                             .replaceAll("%server%", server)
@@ -70,6 +61,15 @@ public class AlertManager {
                 }
             }
         });
+
+        sendToDiscord(config.getString("DISCORD.MESSAGE")
+                .replaceAll("%player%", playerName)
+                .replaceAll("%server%", server)
+                .replaceAll("%check%", check)
+                .replaceAll("%type%", type)
+                .replaceAll("%vl%", Vl)
+                .replaceAll("%maxvl%", maxVL)
+        );
     }
 
     public void sendToDiscord(String message) {

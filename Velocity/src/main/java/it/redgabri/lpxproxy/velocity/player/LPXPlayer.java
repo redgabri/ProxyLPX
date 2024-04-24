@@ -7,21 +7,21 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import java.util.UUID;
 
 public class LPXPlayer extends ILPXPlayer {
-    public LPXPlayer(UUID uuid){
-        this.uuid = uuid;
+    public LPXPlayer(String name){
+        this.name = name;
     }
     @Override
     public void sendMessage(String message) {
-        ProxyLPX.getInstance().getProxyServer().getPlayer(this.uuid).get().sendMessage(MiniMessage.miniMessage().deserialize(message));
+        ProxyLPX.getInstance().getProxyServer().getPlayer(this.name).get().sendMessage(MiniMessage.miniMessage().deserialize(message));
     }
 
     @Override
     public String getServerName() {
-        return ProxyLPX.getInstance().getProxyServer().getPlayer(this.uuid).get().getCurrentServer().get().getServerInfo().getName();
+        return ProxyLPX.getInstance().getProxyServer().getPlayer(this.name).get().getCurrentServer().get().getServerInfo().getName();
     }
 
     @Override
     public boolean hasPermission(String permission) {
-        return ProxyLPX.getInstance().getProxyServer().getPlayer(this.uuid).get().hasPermission(permission);
+        return ProxyLPX.getInstance().getProxyServer().getPlayer(this.name).get().hasPermission(permission);
     }
 }

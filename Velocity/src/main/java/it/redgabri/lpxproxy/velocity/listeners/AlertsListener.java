@@ -31,13 +31,13 @@ public class AlertsListener {
     @Subscribe
     public void onJoin(PostLoginEvent e){
         if (e.getPlayer().hasPermission("lpxproxy.alerts")){
-            ProxyLPX.getInstance().getAlertsManager().setEnabled(ProxyLPX.getInstance().getPlayerManager().getPlayer(e.getPlayer().getUniqueId()), true);
-            e.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(ProxyLPX.getInstance().getConfig().getString(!ProxyLPX.getInstance().getAlertsManager().alertsPlayer.contains(e.getPlayer().getUniqueId()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
+            ProxyLPX.getInstance().getAlertsManager().setEnabled(ProxyLPX.getInstance().getPlayerManager().getPlayer(e.getPlayer().getUsername()), true);
+            e.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize(ProxyLPX.getInstance().getConfig().getString(!ProxyLPX.getInstance().getAlertsManager().alertsPlayer.contains(e.getPlayer().getUsername()) ? "MESSAGES.ALERTS.DISABLED" : "MESSAGES.ALERTS.ENABLED")));
         }
     }
 
     @Subscribe
     public void onDisconnect(DisconnectEvent e){
-        ProxyLPX.getInstance().getAlertsManager().alertsPlayer.remove(e.getPlayer().getUniqueId());
+        ProxyLPX.getInstance().getAlertsManager().alertsPlayer.remove(e.getPlayer().getUsername());
     }
 }
