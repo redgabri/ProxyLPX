@@ -45,9 +45,6 @@ public class AlertManager {
         String server = players.stream().filter(p -> playerName.equalsIgnoreCase(p.name)).findFirst().get().getServerName();
 
         players.forEach(all -> {
-            System.out.println(!all.getServerName().equalsIgnoreCase(server));
-            System.out.println(all.hasPermission("lpxproxy.alerts"));
-            System.out.println(alertsPlayer.contains(all.name));
             if (!all.getServerName().equals(server)) {
                 if (all.hasPermission("lpxproxy.alerts") && alertsPlayer.contains(all.name)) {
                     all.sendMessage(config.getString("MESSAGES.ALERTS.ALERT_MESSAGE")
