@@ -1,21 +1,24 @@
 package it.redgabri.lpxproxy.commons.managers;
 
-import com.velocitypowered.api.proxy.Player;
 import dev.dejvokep.boostedyaml.YamlDocument;
 import it.redgabri.lpxproxy.commons.player.ILPXPlayer;
 import okhttp3.*;
-import org.slf4j.Logger;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class AlertManager {
-    public Set<String> alertsPlayer = new HashSet<>();
+
+    private final Set<String> alertsPlayer = new HashSet<>();
     private final YamlDocument config;
+
     public AlertManager() {
         try {
-            config = YamlDocument.create(this.getClass().getResourceAsStream("/config.yml"));
+            config = YamlDocument.create(Objects.requireNonNull(this.getClass().getResourceAsStream("/config.yml")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -39,8 +42,10 @@ public class AlertManager {
 
         String playerName = info[1].trim();
         String check = checkInfo[0].trim().toLowerCase();
+
         String type = checkInfo[1].trim();
         String maxVL = info[3].trim();
+
         String Vl = info[4].trim();
         String server = players.stream().filter(p -> playerName.equalsIgnoreCase(p.name)).findFirst().get().getServerName();
 
@@ -71,6 +76,7 @@ public class AlertManager {
 
     public void sendToDiscord(String message) {
         if(config.getString("DISCORD.URL").isEmpty()) return;
+
         CompletableFuture.runAsync(() -> {
             OkHttpClient client = new OkHttpClient();
 
@@ -91,5 +97,9 @@ public class AlertManager {
                 e.printStackTrace(System.err);
             }
         });
+    }
+
+    public Set<String> getAlertsPlayer() {
+        return alertsPlayer;
     }
 }
