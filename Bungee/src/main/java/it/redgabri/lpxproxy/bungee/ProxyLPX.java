@@ -29,7 +29,7 @@ public final class ProxyLPX extends Plugin {
     private ILPXPlayer.PlayerManager playerManager;
 
     @Override
-    public void onEnable(){
+    public void onEnable() {
         instance = this;
 
         this.playerManager = new ILPXPlayer.PlayerManager();
